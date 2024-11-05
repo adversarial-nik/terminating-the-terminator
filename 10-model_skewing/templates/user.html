@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <link href="../static/css/black-dashboard.css?v=1.0.0" rel="stylesheet" />
+</head>
+
+<body class="">
+  <div class="wrapper">
+    <div class="main-panel">
+      <div class="content">
+        <div class="row">
+          <div class="col-md-8">
+            <div class="card">
+              <div class="card-header">
+                <h3 class="title">Model Skewing Attack: Spam Classifier</h3>
+              </div>
+              <div class="card-body">
+                <form action="http://localhost:5000/predict" method="post">
+                  <div class="row">
+                    <div class="col-md-12">
+                      <div class="form-group">
+                        <label>SMS</label>
+                        <input type="text" name="SMS" class="form-control" placeholder="sms_val">
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-md-8">
+                      <div class="form-group">
+                        <label><b>{{ sms_pred }}</b></label>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <button type="submit" formaction="/predict" class="btn btn-fill btn-primary">Send message</button>
+                  </div>
+                  <div class="row">
+                    <button type="submit" formaction="/update_model" class="btn btn-fill btn-primary">Mark as Not Spam</button>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div> 
+        </div>
+      </div>
+      <footer class="footer">
+        <div class="container-fluid">
+        </div>
+      </footer>
+    </div>
+  </div>
+</body>
+</html>
