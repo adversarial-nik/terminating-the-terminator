@@ -20,6 +20,7 @@ def predict_img(img_path):
     original_image *= 2.
     x = np.expand_dims(original_image, axis=0)
     pred = model.predict(x)
-    print('\033[92m'+str(decode_predictions(pred, top=3))+'\033[0m')
+    print(f'\n\n')
+    print('\033[92m Model Predictions: '+str(decode_predictions(pred, top=3))+'\033[0m')
     
 predict_img(sys.argv[1])

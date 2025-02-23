@@ -1,0 +1,294 @@
+Here's a API documentation for the four e-commerce APIs: `list_products`, `view_product`, `add_to_cart`, and `buy_product`. This documentation includes authentication requirements, parameter descriptions, example requests, and expected responses.
+
+---
+
+# E-commerce API Documentation
+
+Welcome to the E-commerce API documentation! These APIs allow you to list products, view individual product details, add items to the shopping cart, and make a purchase. 
+
+## Authentication
+
+All API requests must be authenticated with an API key. This key should be included in the request header as follows:
+API key is "s3cr47-4p!-k3y"
+
+```http
+Authorization: Bearer "s3cr47-4p!-k3y"
+```
+
+Additionally, for certain user-specific actions (e.g., adding items to cart, purchasing), a `user_id` parameter is required.
+
+---
+
+## Base URL
+
+```plaintext
+https://api.example.com/v1
+```
+
+---
+
+## Endpoints
+
+### 1. List Products
+
+Retrieve a list of all available products.
+
+**Endpoint:**
+
+```http
+GET /products
+```
+
+**Parameters:**
+
+| Parameter   | Type     | Description                         |
+|-------------|----------|-------------------------------------|
+| api_key     | string   | Required. API key for authentication. |
+| page        | integer  | Optional. The page number for pagination (default: 1). |
+| per_page    | integer  | Optional. Number of products per page (default: 20). |
+
+**Example Request:**
+
+```http
+GET /products?page=1&per_page=10
+Authorization: Bearer "s3cr47-4p!-k3y"
+```
+
+**Response:**
+
+```json
+{
+  "status": "success",
+  "data": [
+    {
+      "product_id": "12345",
+      "name": "Product Name",
+      "price": 29.99,
+      "description": "Product description",
+      "in_stock": true
+    },
+    ...
+  ]
+}
+```
+
+**Response Parameters:**
+
+| Field         | Type      | Description                  |
+|---------------|-----------|------------------------------|
+| product_id    | string    | Unique ID of the product.    |
+| name          | string    | Name of the product.         |
+| price         | float     | Price of the product.        |
+| description   | string    | Description of the product.  |
+| in_stock      | boolean   | Availability status.         |
+
+---
+
+### 2. View Product
+
+Retrieve details of a specific product by its ID.
+
+**Endpoint:**
+
+```http
+GET /product/{product_id}
+```
+
+**Parameters:**
+
+| Parameter     | Type     | Description                               |
+|---------------|----------|-------------------------------------------|
+| api_key       | string   | Required. API key for authentication.     |
+| product_id    | string   | Required. The ID of the product to view.  |
+
+**Example Request:**
+
+```http
+GET /product/12345
+Authorization: Bearer YOUR_API_KEY
+```
+
+**Response:**
+
+```json
+{
+  "status": "success",
+  "data": {
+    "product_id": "12345",
+    "name": "Product Name",
+    "price": 29.99,
+    "description": "Detailed description",
+    "specifications": {
+      "weight": "1kg",
+      "color": "Red",
+      "dimensions": "10x10x10 cm"
+    },
+    "in_stock": true
+  }
+}
+```
+
+**Response Parameters:**
+
+| Field            | Type      | Description                          |
+|------------------|-----------|--------------------------------------|
+| specifications   | object    | Key specifications of the product.   |
+| weight           | string    | Weight of the product.               |
+| color            | string    | Color of the product.                |
+| dimensions       | string    | Dimensions of the product.           |
+
+---
+
+### 3. Add to Cart
+
+Add a product to the user’s cart.
+
+**Endpoint:**
+
+```http
+POST /cart/add
+```
+
+**Parameters:**
+
+| Parameter     | Type     | Description                                   |
+|---------------|----------|-----------------------------------------------|
+| api_key       | string   | Required. API key for authentication.         |
+| user_id       | string   | Required. Unique ID of the user.              |
+| product_id    | string   | Required. ID of the product to add.           |
+| quantity      | integer  | Optional. Quantity of the product (default: 1). |
+
+**Example Request:**
+
+```http
+POST /cart/add
+Authorization: Bearer "s3cr47-4p!-k3y"
+Content-Type: application/json
+
+{
+  "user_id": "user123",
+  "product_id": "12345",
+  "quantity": 2,
+  "api_key": "s3cr47-4p!-k3y"
+}
+```
+
+**Response:**
+
+```json
+{
+  "status": "success",
+  "message": "Product added to cart successfully",
+  "data": {
+    "cart_id": "cart123",
+    "user_id": "user123",
+    "items": [
+      {
+        "product_id": "12345",
+        "name": "Product Name",
+        "quantity": 2,
+        "price": 29.99
+      }
+    ]
+  }
+}
+```
+
+**Response Parameters:**
+
+| Field         | Type      | Description                                   |
+|---------------|-----------|-----------------------------------------------|
+| cart_id       | string    | Unique ID of the cart.                        |
+| items         | array     | List of items in the cart.                    |
+
+---
+
+### 4. Buy Product
+
+Make a purchase for all items in the user’s cart.
+
+**Endpoint:**
+
+```http
+POST /purchase
+```
+
+**Parameters:**
+
+| Parameter     | Type     | Description                                       |
+|---------------|----------|---------------------------------------------------|
+| api_key       | string   | Required. API key for authentication.             |
+| user_id       | string   | Required. Unique ID of the user.                  |
+| payment_info  | object   | Required. Payment information (e.g., card details).|
+
+**Example Request:**
+
+```http
+POST /purchase
+Authorization: Bearer YOUR_API_KEY
+Content-Type: application/json
+
+{
+  "user_id": "user123",
+  "payment_info": {
+    "card_number": "4111111111111111",
+    "expiry_date": "12/23",
+    "cvv": "123"
+  }
+}
+```
+
+**Response:**
+
+```json
+{
+  "status": "success",
+  "message": "Purchase completed successfully",
+  "data": {
+    "order_id": "order123",
+    "user_id": "user123",
+    "total_amount": 59.98,
+    "items": [
+      {
+        "product_id": "12345",
+        "name": "Product Name",
+        "quantity": 2,
+        "price": 29.99
+      }
+    ],
+    "order_date": "2024-11-08T12:34:56Z"
+  }
+}
+```
+
+**Response Parameters:**
+
+| Field           | Type      | Description                             |
+|-----------------|-----------|-----------------------------------------|
+| order_id        | string    | Unique ID of the order.                |
+| total_amount    | float     | Total cost of the order.               |
+| order_date      | string    | Date and time of the order (ISO 8601). |
+
+---
+
+## Error Handling
+
+Errors will return an HTTP status code along with a JSON object containing the error details.
+
+**Example Error Response:**
+
+```json
+{
+  "status": "error",
+  "error_code": 401,
+  "message": "Unauthorized - invalid API key"
+}
+```
+
+| Field         | Type    | Description                   |
+|---------------|---------|-------------------------------|
+| error_code    | integer | HTTP status code of the error |
+| message       | string  | Description of the error      |
+
+--- 
+

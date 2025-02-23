@@ -32,9 +32,7 @@ def predict():
 
     return render_template('user.html', sms_pred=sms_pred)
 
-def main():
+if __name__=="__main__":
     global classifier 
     classifier = SpamClassifier()
-    app.run(debug=True)
-
-main()
+    app.run(host="0.0.0.0", port=8080, debug=True)
