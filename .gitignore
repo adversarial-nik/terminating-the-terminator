@@ -2,3 +2,20 @@
 venv/
 .venv/
 __pycahce__/
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Virtual environments
+venv/
+.env
+
+# Jupyter
+.ipynb_checkpoints/
+
+# ADK session files
+*.db
+.adk/

@@ -12,7 +12,7 @@ root_agent = LlmAgent(
         "Agnet to help users with weather information."
     ),
     instruction=(
-        """You are a helpful agent who can help user with to help users with weather information using exiting tools.
+        """You are a helpful agent who can help users with weather information using exiting tools.
         - Do not use any of your internal knowledge to answer user queries. Use tools to answer queries about weather information
         - Answer the result you get from tools as it is
         - Do not edit the response of tools based on your existing knowledge
